@@ -8,6 +8,8 @@ class SevenBotController {
   KPowerServoController* servos[6];
   int servo_length;
   int i;
+  String received_string;
+  char received_char;
 
   public:
   SevenBotController();
@@ -24,6 +26,8 @@ class SevenBotController {
   String get_axis_str();
   boolean update_target_axis(String str_axis_info);
   boolean update_axis();
+  void receive_serial_as_slave(HardwareSerial* serial_to_input);
+  void send_serial_as_master(HardwareSerial* serial_to_output);
 };
 
 #endif
