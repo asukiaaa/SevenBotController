@@ -33,18 +33,27 @@ SevenBotController::SevenBotController() {
 }
 
 void SevenBotController::power_on() {
-  //servos[0]->power_on();
-  //servos[1]->power_on();
-  //servos[2]->power_on();
   for(i=0; i<servo_length; i++) {
     servos[i]->power_on();
   }
+}
+
+void SevenBotController::power_on(int servo_num) {
+ if ( servo_num >= 0 && servo_num < servo_length ) {
+   servos[servo_num]->power_on();
+ }
 }
 
 void SevenBotController::power_off() {
   for (i=0; i<servo_length; i++) {
     servos[i]->power_off();
   }
+}
+
+void SevenBotController::power_off(int servo_num) {
+ if ( servo_num >= 0 && servo_num < servo_length ) {
+   servos[servo_num]->power_off();
+ }
 }
 
 String SevenBotController::get_axis_str() {
@@ -63,6 +72,9 @@ String SevenBotController::get_axis_str() {
 }
 
 boolean SevenBotController::update_target_axis(String axis_str) {
+  // needed to check format
+  //Serial.println(axis_str);
+
   char str_separator = ',';
 
   int begin_index;
@@ -95,23 +107,25 @@ boolean SevenBotController::update_target_axis(String axis_str) {
   }
 
   // axis1 + axis2 have to be between 90 and 130
-  //int axis1 = axis_list[1];
-  //int axis2 = axis_list[2];
-  //int asix1_2_sum = axis1 + axis2;
-  //int over_value;
-  //if (axis_index == 2) {
-  //  //axis[1]
-  //} else if (axis_index >= 3) {
-  //  if (axis1_2_sum < 90) {
-  //
-  //  } else if (axis1_2_sum > 130) {
-  //    over_value = axis1_2_sum - 130;
-  //
-  //    if ( axis1 > servo[1].max_axis ) {
-  //      axis_list[1] = servo[1].max_axis
-  //    }
-  //  }
-  //}
+  int axis1 = axis_list[1];
+  if (axis_index < 1) {
+    axis1 = servos[1]->get_current_axis();
+  }
+  int axis2 = axis_list[2];
+  if (axis_index < 2) {
+    axis2 = servos[2]->get_current_axis();
+  }
+  int axis1_2_sum = axis1 + axis2;
+  int over_value;
+  if (axis1_2_sum < 90) {
+    // todo
+  } else if (axis1_2_sum > 130) {
+    over_value = axis1_2_sum - 130;
+    // todo
+    if ( axis1 > servos[1]->max_axis ) {
+      //axis_list[1] = servo[1].max_axis
+    }
+  }
 
   for (i=0; i<axis_index; i++) {
     servos[i]->set_target_axis(axis_list[i]);
@@ -145,9 +159,10 @@ void SevenBotController::send_serial_as_master(HardwareSerial* serial_to_output)
   for (i=0; i<sending_string.length(); i++) {
     serial_to_output->print(sending_string[i]);
     // Serial.print(sending_string[i]);
-    delay(10);
+    delay(2);
   }
   serial_to_output->print('\n');
+  //serial_to_output->flush();
   // Serial.print('\n');
 }
 

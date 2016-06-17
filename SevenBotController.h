@@ -22,7 +22,9 @@ class SevenBotController {
   KPowerServoController* top_roll_servo;
 
   void power_on();
+  void power_on(int servo_num);
   void power_off();
+  void power_off(int servo_num);
   String get_axis_str();
   boolean update_target_axis(String str_axis_info);
   boolean update_axis();
