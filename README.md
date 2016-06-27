@@ -4,10 +4,28 @@ A library for Arduino to control a 7bot.
 The library is not perfect. Please try with your own risk.
 
 # Requirements
-This library needs KPowerServoController.
-Please install also that.
+Please install the following packages.
+
+## KPowerServoController.
+For servo control.
 
 https://github.com/asukiaaa/KPowerServoController
+
+```
+cd [arduino sketch dir]/libraries
+git clone git@github.com:asukiaaa/KPowerServoController.git
+```
+
+## Scheduler
+For multithreading.
+
+https://github.com/fabriceo/SCoop
+
+```
+cd [arduino sketch dir]/libraries
+git clone git@github.com:fabriceo/SCoop.git
+ln -s SCoop/SchedulerARMAVR ./
+```
 
 # Mirroring
 An example to send axis information of a master to a slave.
@@ -41,13 +59,18 @@ void setup() {
   // Serial.begin(9600);
   delay(1000);
   seven_bot.power_on();
+  Scheduler.startLoop(loop2);
 }
 
 void loop() {
   seven_bot.receive_serial_as_slave(&Serial1);
   //seven_bot.receive_serial_as_slave(&Serial);
+  delay(10);
+}
+
+void loop2() {
   seven_bot.update_angle();
-  delay(15);
+  delay(10);
 }
 ```
 
