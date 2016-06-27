@@ -25,9 +25,9 @@ class SevenBotController {
   void power_on(int servo_num);
   void power_off();
   void power_off(int servo_num);
-  String get_axis_str();
-  boolean update_target_axis(String str_axis_info);
-  boolean update_axis();
+  String get_angle_str();
+  boolean update_target_angle(String str_angle_info);
+  boolean update_angle();
   void receive_serial_as_slave(HardwareSerial* serial_to_input);
   void send_serial_as_master(HardwareSerial* serial_to_output);
 };

@@ -13,6 +13,6 @@ void setup() {
 void loop() {
   seven_bot.receive_serial_as_slave(&Serial1);
   //seven_bot.receive_serial_as_slave(&Serial);
-  seven_bot.update_axis();
+  seven_bot.update_angle();
 }
 
