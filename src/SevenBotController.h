@@ -3,10 +3,11 @@
 #include <Arduino.h>
 #include <KPowerServoController.h>
 
+#define SEVENBOT_SERVO_NUM 6
+
 class SevenBotController {
   private:
-  KPowerServoController* servos[6];
-  int servo_length;
+  KPowerServoController* servos[SEVENBOT_SERVO_NUM];
   int i;
   String received_string;
   char received_char;

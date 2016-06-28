@@ -9,6 +9,7 @@ void setup() {
 
 void loop() {
   seven_bot.send_serial_as_master(&Serial1);
-  //seven_bot.send_serial_as_master(&Serial);
+  seven_bot.send_serial_as_master(&Serial);
+  delay(10);
 }
 
